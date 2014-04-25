@@ -15,13 +15,11 @@ import javax.swing.JTextPane;
 public class OpenPages {
 
 	private ArrayList<JTextPane> pages;
-	private static int focusedPage;
-	private int numPages;
+	private int focusedPage;
 	
 	public OpenPages(){
 		pages = new ArrayList<JTextPane>();
 		focusedPage = 0;
-		numPages = 0;
 	}
 	
 	/**
@@ -33,13 +31,10 @@ public class OpenPages {
 	 */
 	public JTextPane newPage(){
 		JTextPane newPage = new JTextPane();
-		this.add(newPage);
+		newPage = this.add(newPage);
 		return newPage;
 	}
 	
-	public JTextPane get(int i){
-		return pages.get(i);
-	}
 	public ArrayList<JTextPane> getPages(){
 		return pages;
 	}
@@ -48,15 +43,21 @@ public class OpenPages {
 	}
 	public JTextPane add(JTextPane newPage){
 		
-		newPage.addFocusListener(new pageFocusListener(this,numPages));
-		numPages++;
+		newPage.addFocusListener(new pageFocusListener(this,pages.size()));
 		pages.add(newPage);
 		return newPage;
 	}
 	
 	public JTextPane removePage(){
-		numPages--;
-		return (pages.remove(pages.size() - 1));
+		JTextPane removedPage;
+		
+		if(pages.size() < 1){
+			removedPage = null;
+		}
+		else{
+			removedPage = (pages.remove(pages.size() - 1));
+		}
+		return removedPage;
 	}
 	
 	public boolean isEmpty(){
@@ -64,29 +65,27 @@ public class OpenPages {
 	}
 	
 	public int size(){
-		return numPages;
+		return pages.size();
 	}
 	
 	public void setFocusedPage(int pageIndex){
 		focusedPage = pageIndex;
-		System.out.println(pageIndex);
 	}
 	
 	public static class pageFocusListener implements FocusListener {
-		int pageNum;
+		int pageID;
 		OpenPages pages;
-		public pageFocusListener(OpenPages pages, int pageNum){
-			this.pageNum = pageNum;
+		public pageFocusListener(OpenPages pages, int pageID){
+			this.pageID = pageID;
 			this.pages = pages;
 		}
         @Override
         public void focusGained(FocusEvent e) {
-            pages.setFocusedPage(pageNum);
+            pages.setFocusedPage(pageID);
         }
 
         @Override
-        public void focusLost(FocusEvent e) {
-        }
+        public void focusLost(FocusEvent e) {}
 
     }
 }
