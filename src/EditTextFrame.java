@@ -29,7 +29,7 @@ public class EditTextFrame extends JFrame {
 		this.createComponents();
 		this.setJMenuBar(menuBar);
 	    this.add(textPanel, BorderLayout.NORTH);
-		this.setSize(new Dimension(400,400));
+		this.setSize(new Dimension(500,400));
 		this.setVisible(true);
 	}
 

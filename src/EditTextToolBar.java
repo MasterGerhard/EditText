@@ -1,17 +1,15 @@
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.net.URL;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
+import javax.swing.JTextPane;
 import javax.swing.JToolBar;
+
+import pages.OpenPages;
 
 @SuppressWarnings("serial")
 public class EditTextToolBar extends JToolBar {
 
-	public EditTextToolBar(){
+	public EditTextToolBar(OpenPages pages){
 		super("ribbon");
-		EditTextButtonFactory.addFontButtonsTo(this);
+		EditTextButtonFactory.addFunctionalButtonsTo(this);
+		EditTextButtonFactory.addFontButtonsTo(this, pages);
 				
 	}
 
