@@ -54,7 +54,6 @@ public class EditTextModel {
 		StyledDocument doc = new EditTextStyledDocument();
 	    newPage.setDocument(doc);
 		newPage.setFont(new Font("Myraid", Font.PLAIN, 12));
-		newPage.setText("one two three four five six seven eight nine ten");
 		newPage.setPreferredSize(new Dimension(400,400));
 		newPage.setBorder(new BevelBorder(BevelBorder.RAISED));
 		GridBagConstraints c = new GridBagConstraints();

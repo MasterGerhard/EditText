@@ -50,8 +50,10 @@ public class EditTextButtonFactory {
 		
 		tb.add(newPage);
 		tb.add(removePage);
+		tb.addSeparator();
 		tb.add(wordCount);
 		tb.add(spellCheck);
+		tb.addSeparator();
 	}
 	
 	/**
@@ -107,6 +109,7 @@ public class EditTextButtonFactory {
 		tb.add(bold);
 		tb.add(italics);
 		tb.add(underlined);
+		tb.addSeparator();
 		tb.add(size);
 		tb.add(color);
 		
@@ -148,11 +151,14 @@ public class EditTextButtonFactory {
 		public void actionPerformed(ActionEvent e) {
 			if(add){
 				pagePanel.addPage();
+				if(spellCheck.isEnabled()) {
+					spellCheck.actionPerformed(e);
+				}
 			}
 			else{
 				pagePanel.removePage();
 			}
-			spellCheck.actionPerformed(e);
+			
 		}
 		
 	}

@@ -2,9 +2,13 @@ package UI;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.border.BevelBorder;
@@ -33,20 +37,36 @@ public class EditTextFrame extends JFrame {
 		this.createComponents();
 		
 		
-		this.setLayout(new BorderLayout());
+		this.setLayout(new GridBagLayout());
 		EditTextToolBar tb = textModel.getToolBar();
 		
 		
 		
 		JScrollPane pageScroll = new JScrollPane(textModel.getPagePanel());
-		pageScroll.setPreferredSize(new Dimension(300,250));
+		//pageScroll.setMinimumSize(new Dimension(100,100));
 	    pageScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 	    pageScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	    pageScroll.setBorder(new BevelBorder(BevelBorder.LOWERED));
 	    
+
 		this.setJMenuBar(menuBar);
-		this.add(tb, BorderLayout.PAGE_START);
-		this.add(pageScroll, BorderLayout.AFTER_LAST_LINE);
+		
+		GridBagConstraints c = new GridBagConstraints();
+		
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.weightx = 0.0;
+		c.gridwidth = 3;
+		c.gridx = 0;
+		c.gridy = 0;
+		
+		this.add(tb,c);
+		c.fill = GridBagConstraints.BOTH;
+		c.weighty = 1;
+		c.gridwidth = 3;
+		c.gridx = 0;
+		c.gridy = 1;
+		
+		this.add(pageScroll,c);
 		
 		pack();
 		this.setVisible(true);

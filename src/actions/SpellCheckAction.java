@@ -21,12 +21,12 @@ import UI.EditTextModel;
 public class SpellCheckAction extends AbstractAction {
 
 	private EditTextModel pagePanel;
-	private boolean isEnabled;
+	private boolean isEnabled=false;
 	private JButton source;
+	
 	public SpellCheckAction(EditTextModel pagePanel, JButton src){
 		this.pagePanel = pagePanel;
 		source = src;
-		isEnabled = false;
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -57,4 +57,7 @@ public class SpellCheckAction extends AbstractAction {
 		}
 		
 	}
+	
+	public boolean isEnabled(){ return isEnabled; }
+	
 }
