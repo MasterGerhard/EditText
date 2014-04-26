@@ -10,25 +10,38 @@ import javax.swing.text.StyleConstants;
 import Style.EditTextStyledDocument;
 import pages.OpenPages;
 /**
- * Fired off when underline button is toggled on
+ * Fired off when Underlined button is toggled on
  * @author SteveG
  *
  */
 @SuppressWarnings("serial")
-public class UnderlinedAction extends AbstractAction {
-
+public class UnderlinedAction extends AbstractAction implements FontAction {
+	
 	private OpenPages pages;
 	
 	public UnderlinedAction(OpenPages pages){
 		this.pages = pages;
+		enabled = false;
 	}
+	
 	public void actionPerformed(ActionEvent e) {
+		enabled = ((JToggleButton)e.getSource()).isSelected();
+		doFontAction();
+	}
+	
+	public void doFontAction(){
 		JTextPane textPane = pages.getFocusedPage();
 		EditTextStyledDocument doc = (EditTextStyledDocument) textPane.getDocument();
-		StyleConstants.setUnderline(doc.getAttrStyle(), ((JToggleButton)e.getSource()).isSelected());
+		StyleConstants.setUnderline(doc.getAttrStyle(), enabled);
         doc.setCharacterAttributes(textPane.getSelectionStart(), textPane.getSelectionEnd() - textPane.getSelectionStart(), doc.getAttrStyle(), false);
-		textPane.requestFocus();	
+		textPane.requestFocus();
+		
+		// set all pages to Underlined
+		for(int i = 0; i<pages.size();i++){
+			JTextPane currentPage = pages.get(i);
+			EditTextStyledDocument tempDoc = (EditTextStyledDocument) currentPage.getDocument();
+			StyleConstants.setUnderline(tempDoc.getAttrStyle(), enabled);	
+		}	
 	}
-		
-		
+	
 }

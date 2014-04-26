@@ -15,18 +15,33 @@ import pages.OpenPages;
  *
  */
 @SuppressWarnings("serial")
-public class BoldAction extends AbstractAction {
-
+public class BoldAction extends AbstractAction implements FontAction {
+	
 	private OpenPages pages;
 	
 	public BoldAction(OpenPages pages){
 		this.pages = pages;
+		enabled = false;
 	}
+	
 	public void actionPerformed(ActionEvent e) {
+		enabled = ((JToggleButton)e.getSource()).isSelected();
+		doFontAction();
+	}
+	
+	public void doFontAction(){
 		JTextPane textPane = pages.getFocusedPage();
 		EditTextStyledDocument doc = (EditTextStyledDocument) textPane.getDocument();
-		StyleConstants.setBold(doc.getAttrStyle(), ((JToggleButton)e.getSource()).isSelected());
+		StyleConstants.setBold(doc.getAttrStyle(), enabled);
         doc.setCharacterAttributes(textPane.getSelectionStart(), textPane.getSelectionEnd() - textPane.getSelectionStart(), doc.getAttrStyle(), false);
 		textPane.requestFocus();
-	}		
+		
+		// set all pages to bold/notbold
+		for(int i = 0; i<pages.size();i++){
+			JTextPane currentPage = pages.get(i);
+			EditTextStyledDocument tempDoc = (EditTextStyledDocument) currentPage.getDocument();
+			StyleConstants.setBold(tempDoc.getAttrStyle(), enabled);	
+		}	
+	}
+	
 }

@@ -3,6 +3,7 @@ package UI;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
+import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
 import javax.swing.AbstractButton;
@@ -39,11 +40,12 @@ public class EditTextButtonFactory {
 		// Spell Check needs to be called on new pages if they are
 		// added after spell check has been pressed
 		// we pass the action onto add/remove page
-		AbstractAction spellCheckAction = new SpellCheckAction(pagePanel,spellCheck);
+		AbstractAction spellCheckAction = new SpellCheckAction(pagePanel);
+		tb.addFontAction((FontAction)spellCheckAction);
+		ArrayList<FontAction> fontActions = tb.getFontActions();
 		
-		
-		newPage.addActionListener(new addRemovePageListener(true,pagePanel,spellCheckAction));
-		removePage.addActionListener(new addRemovePageListener(false,pagePanel,spellCheckAction));
+		newPage.addActionListener(new addRemovePageListener(true,pagePanel,fontActions));
+		removePage.addActionListener(new addRemovePageListener(false,pagePanel,fontActions));
 		wordCount.addActionListener(new wordToolListener(new WordCountAction(pagePanel)));
 		spellCheck.addActionListener(new wordToolListener(spellCheckAction));
 		
@@ -98,12 +100,25 @@ public class EditTextButtonFactory {
 		size.setToolTipText("Text Size");
 		color.setToolTipText("Text Color");
 		
-		bold.addActionListener(new fontListener(new BoldAction(pagePanel.getOpenPages())));
-		italics.addActionListener(new fontListener(new ItalicsAction(pagePanel.getOpenPages())));
-		underlined.addActionListener(new fontListener(new UnderlinedAction(pagePanel.getOpenPages())));
-		size.addActionListener(new fontListener(new FontSizeAction(pagePanel.getOpenPages())));
-		color.addActionListener(new fontListener(new FontColorAction(pagePanel.getOpenPages())))
-		;
+		AbstractAction boldAction = new BoldAction(pagePanel.getOpenPages());
+		AbstractAction italicsAction = new ItalicsAction(pagePanel.getOpenPages());
+		AbstractAction underlinedAction = new UnderlinedAction(pagePanel.getOpenPages());
+		AbstractAction sizeAction = new FontSizeAction(pagePanel.getOpenPages());
+		AbstractAction colorAction = new FontColorAction(pagePanel.getOpenPages());
+		
+		tb.addFontAction((FontAction)boldAction);
+		tb.addFontAction((FontAction)italicsAction);
+		tb.addFontAction((FontAction)underlinedAction);
+		tb.addFontAction((FontAction)sizeAction);
+		tb.addFontAction((FontAction)colorAction);
+		
+		
+		bold.addActionListener(new fontListener(boldAction));
+		italics.addActionListener(new fontListener(italicsAction));
+		underlined.addActionListener(new fontListener(underlinedAction));
+		size.addActionListener(new fontListener(sizeAction));
+		color.addActionListener(new fontListener(colorAction));
+		
 		size.setSelectedIndex(11);
 		color.setSelectedIndex(0);
 		tb.add(bold);
@@ -131,37 +146,45 @@ public class EditTextButtonFactory {
 		}
 	}
 	
+	
 	// Action Listeners
 	
 	public static class addRemovePageListener implements ActionListener{
 		private EditTextModel pagePanel;
 		private boolean add;
-		private AbstractAction spellCheck;
+		private ArrayList<FontAction> fontActions;
 		/**
 		 * Adds a page iff addPage is true.
 		 * Removes a page otherwise.
 		 * @param addPage
 		 */
 		public addRemovePageListener(boolean addPage, EditTextModel pagePanel,
-				AbstractAction spellCheck){
+				ArrayList<FontAction> actions){
 			this.add = addPage;
 			this.pagePanel = pagePanel;
-			this.spellCheck = spellCheck;
+			fontActions = actions;
 		}
 		public void actionPerformed(ActionEvent e) {
 			if(add){
 				pagePanel.addPage();
-				if(spellCheck.isEnabled()) {
-					spellCheck.actionPerformed(e);
-				}
+				setNewPageAttributes(e);
 			}
 			else{
 				pagePanel.removePage();
 			}
 			
 		}
-		
-	}
+		// if a new page is added, set its attributes
+		// to match the current selections
+		public void setNewPageAttributes(ActionEvent e) {
+			for(int i = 0; i < fontActions.size();i++){
+				FontAction tempAct = fontActions.get(i);
+				if(tempAct.isEnabled()){
+					tempAct.doFontAction();
+				}
+			}
+		}
+}
 
 	public static class wordToolListener implements ActionListener{
 		private AbstractAction wordAction;

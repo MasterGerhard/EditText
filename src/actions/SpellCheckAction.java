@@ -18,30 +18,31 @@ import UI.EditTextModel;
  *
  */
 @SuppressWarnings("serial")
-public class SpellCheckAction extends AbstractAction {
+public class SpellCheckAction extends AbstractAction implements FontAction {
 
 	private EditTextModel pagePanel;
-	private boolean isEnabled=false;
-	private JButton source;
 	
-	public SpellCheckAction(EditTextModel pagePanel, JButton src){
+	public SpellCheckAction(EditTextModel pagePanel){
 		this.pagePanel = pagePanel;
-		source = src;
-	}
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if(((JButton)e.getSource()) == source){
-			isEnabled = !isEnabled;
-		}
+		enabled = false;
 		// Create user dictionary in the current working directory of your application
 		SpellChecker.setUserDictionaryProvider( new FileUserDictionary() );
 			        
 		// Load the configuration from the file dictionaries.cnf and 
 		// use the current locale or the first language as default (English)
 		SpellChecker.registerDictionaries( null, null );
-				
-		// enable/disable the spell checking on all pages
-		if(isEnabled){
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		enabled = !enabled;
+		doFontAction();
+		
+		
+	}
+
+	@Override
+	public void doFontAction() {
+		if(enabled){
 			ArrayList<JTextPane> allPages = pagePanel.getOpenPages().getPages();
 			for(int i = 0; i<allPages.size();i++){
 				JTextPane currentPage = allPages.get(i);
@@ -57,7 +58,5 @@ public class SpellCheckAction extends AbstractAction {
 		}
 		
 	}
-	
-	public boolean isEnabled(){ return isEnabled; }
 	
 }

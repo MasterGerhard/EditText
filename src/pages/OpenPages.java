@@ -38,6 +38,11 @@ public class OpenPages {
 	public ArrayList<JTextPane> getPages(){
 		return pages;
 	}
+	
+	public JTextPane get(int i){
+		return pages.get(i);
+	}
+	
 	public JTextPane getFocusedPage(){
 		return pages.get(focusedPage);
 	}
