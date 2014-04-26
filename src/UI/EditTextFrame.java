@@ -7,6 +7,7 @@ import java.awt.event.WindowListener;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
+import javax.swing.border.BevelBorder;
 /**
  * Holds the JMenuBar and JPanel
  * also has a command store for undo/redo
@@ -30,38 +31,23 @@ public class EditTextFrame extends JFrame {
 		
 		 
 		this.createComponents();
-		this.setJMenuBar(menuBar);
+		
 		
 		this.setLayout(new BorderLayout());
 		EditTextToolBar tb = textModel.getToolBar();
-		tb.setMaximumSize(new Dimension(this.getWidth(),50));
-		this.add(tb, BorderLayout.PAGE_START);
+		
+		
+		
 		JScrollPane pageScroll = new JScrollPane(textModel.getPagePanel());
-		pageScroll.setPreferredSize(new Dimension(450,550));
+		pageScroll.setPreferredSize(new Dimension(300,250));
 	    pageScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 	    pageScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+	    pageScroll.setBorder(new BevelBorder(BevelBorder.LOWERED));
+	    
+		this.setJMenuBar(menuBar);
+		this.add(tb, BorderLayout.PAGE_START);
 		this.add(pageScroll, BorderLayout.AFTER_LAST_LINE);
 		
-		/*this.setLayout(new GridBagLayout());
-		
-		GridBagConstraints c = new GridBagConstraints();
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
-		c.gridy = 0;
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
-		this.add(textModel.getToolBar(),c);
-		
-	    JScrollPane pageScroll = new JScrollPane(textModel.getPagePanel());
-	    
-	    pageScroll.setPreferredSize(new Dimension(450,400));
-	    pageScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-	    pageScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-	    c.fill = GridBagConstraints.NONE;
-		c.gridx = 0;
-		c.gridy = 1;
-		c.anchor = GridBagConstraints.CENTER;
-	    this.add(pageScroll, c);*/
-		this.setMinimumSize(new Dimension(500,600));
 		pack();
 		this.setVisible(true);
 	}

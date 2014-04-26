@@ -8,6 +8,7 @@ import java.awt.Insets;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
+import javax.swing.border.BevelBorder;
 import javax.swing.text.StyledDocument;
 
 import Style.EditTextStyledDocument;
@@ -55,6 +56,7 @@ public class EditTextModel {
 		newPage.setFont(new Font("Myraid", Font.PLAIN, 12));
 		newPage.setText("one two three four five six seven eight nine ten");
 		newPage.setPreferredSize(new Dimension(400,400));
+		newPage.setBorder(new BevelBorder(BevelBorder.RAISED));
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.NONE;
 		c.gridx = 0;
