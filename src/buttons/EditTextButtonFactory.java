@@ -12,8 +12,8 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JToggleButton;
 
-import UI.EditTextPageModel;
-import UI.EditTextToolBar;
+import main.EditTextPageModel;
+import main.EditTextToolBar;
 import actions.*;
 
 /**
