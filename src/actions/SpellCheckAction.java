@@ -10,7 +10,7 @@ import javax.swing.JTextPane;
 import pages.OpenPages;
 import JOrtho.com.inet.jortho.SpellChecker;
 import JOrtho.com.inet.jortho.FileUserDictionary;
-import UI.EditTextModel;
+import UI.EditTextPageModel;
 
 /**
  * Spell Checking functionality toggle

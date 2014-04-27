@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 
 import UI.EditText;
-import UI.EditTextModel;
+import UI.EditTextPageModel;
 import pages.OpenPages;
 /**
  * Displays a wordcount

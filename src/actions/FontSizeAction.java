@@ -7,7 +7,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTextPane;
 import javax.swing.text.StyleConstants;
 
-import Style.EditTextStyledDocument;
+import pages.EditTextStyledDocument;
 import pages.OpenPages;
 
 /**

@@ -10,7 +10,7 @@ import javax.swing.JTextPane;
 import javax.swing.JToggleButton;
 import javax.swing.text.StyleConstants;
 
-import Style.EditTextStyledDocument;
+import pages.EditTextStyledDocument;
 import pages.OpenPages;
 
 /**

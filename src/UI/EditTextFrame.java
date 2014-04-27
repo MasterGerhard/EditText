@@ -22,7 +22,7 @@ import javax.swing.border.BevelBorder;
 public class EditTextFrame extends JFrame {
 	
 	private EditTextMenuBar menuBar;
-	private EditTextModel textModel;
+	private EditTextPageModel textModel;
 	private EditTextApplication application;
 	private CommandStore cmdStore;
 	
@@ -74,7 +74,7 @@ public class EditTextFrame extends JFrame {
 
 	private void createComponents() {
 		menuBar = new EditTextMenuBar(application);
-		textModel = new EditTextModel();
+		textModel = new EditTextPageModel();
 		cmdStore = new CommandStore();
 		
 	}
