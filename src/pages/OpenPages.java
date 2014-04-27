@@ -55,11 +55,9 @@ public class OpenPages {
 	
 	public JTextPane removePage(){
 		JTextPane removedPage;
+		removedPage = null;
 		
-		if(pages.size() < 1){
-			removedPage = null;
-		}
-		else{
+		if(!pages.isEmpty()){
 			removedPage = (pages.remove(pages.size() - 1));
 		}
 		return removedPage;
