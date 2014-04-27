@@ -42,8 +42,9 @@ public class FontColorAction extends AbstractAction implements FontAction{
 		    System.out.println(ex.toString());
 		}
 	
-		
-		doFontAction();
+		if(!pages.isEmpty()){
+			doFontAction();
+		}
 		
 	}
 	

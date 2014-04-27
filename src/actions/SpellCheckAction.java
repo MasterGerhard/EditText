@@ -7,6 +7,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
 
+import pages.OpenPages;
 import JOrtho.com.inet.jortho.SpellChecker;
 import JOrtho.com.inet.jortho.FileUserDictionary;
 import UI.EditTextModel;
@@ -20,10 +21,10 @@ import UI.EditTextModel;
 @SuppressWarnings("serial")
 public class SpellCheckAction extends AbstractAction implements FontAction {
 
-	private EditTextModel pagePanel;
+	private OpenPages pages;
 	
-	public SpellCheckAction(EditTextModel pagePanel){
-		this.pagePanel = pagePanel;
+	public SpellCheckAction(OpenPages pages){
+		this.pages = pages;
 		enabled = false;
 		// Create user dictionary in the current working directory of your application
 		SpellChecker.setUserDictionaryProvider( new FileUserDictionary() );
@@ -35,7 +36,9 @@ public class SpellCheckAction extends AbstractAction implements FontAction {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		enabled = !enabled;
-		doFontAction();
+		if(!pages.isEmpty()){
+			doFontAction();
+		}
 		
 		
 	}
@@ -43,16 +46,15 @@ public class SpellCheckAction extends AbstractAction implements FontAction {
 	@Override
 	public void doFontAction() {
 		if(enabled){
-			ArrayList<JTextPane> allPages = pagePanel.getOpenPages().getPages();
-			for(int i = 0; i<allPages.size();i++){
-				JTextPane currentPage = allPages.get(i);
+			
+			for(int i = 0; i<pages.size();i++){
+				JTextPane currentPage = pages.get(i);
 				SpellChecker.register(currentPage);
 			}	
 		}
 		else{
-			ArrayList<JTextPane> allPages = pagePanel.getOpenPages().getPages();
-			for(int i = 0; i<allPages.size();i++){
-				JTextPane currentPage = allPages.get(i);
+			for(int i = 0; i<pages.size();i++){
+				JTextPane currentPage = pages.get(i);
 				SpellChecker.unregister(currentPage);
 			}	
 		}

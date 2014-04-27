@@ -26,7 +26,9 @@ public class BoldAction extends AbstractAction implements FontAction {
 	
 	public void actionPerformed(ActionEvent e) {
 		enabled = ((JToggleButton)e.getSource()).isSelected();
-		doFontAction();
+		if(!pages.isEmpty()){
+			doFontAction();
+		}
 	}
 	
 	public void doFontAction(){

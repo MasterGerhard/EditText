@@ -29,7 +29,9 @@ public class FontSizeAction extends AbstractAction implements FontAction{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		selectedSize = Integer.parseInt(((JComboBox)e.getSource()).getSelectedItem().toString());
-		doFontAction();
+		if(!pages.isEmpty()){
+			doFontAction();
+		}
 		
 	}
 

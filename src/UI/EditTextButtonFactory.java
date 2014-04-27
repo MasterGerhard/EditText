@@ -40,13 +40,13 @@ public class EditTextButtonFactory {
 		// Spell Check needs to be called on new pages if they are
 		// added after spell check has been pressed
 		// we pass the action onto add/remove page
-		AbstractAction spellCheckAction = new SpellCheckAction(pagePanel);
+		AbstractAction spellCheckAction = new SpellCheckAction(pagePanel.getOpenPages());
 		tb.addFontAction((FontAction)spellCheckAction);
 		ArrayList<FontAction> fontActions = tb.getFontActions();
 		
 		newPage.addActionListener(new addRemovePageListener(true,pagePanel,fontActions));
 		removePage.addActionListener(new addRemovePageListener(false,pagePanel,fontActions));
-		wordCount.addActionListener(new wordToolListener(new WordCountAction(pagePanel)));
+		wordCount.addActionListener(new wordToolListener(new WordCountAction(pagePanel.getOpenPages())));
 		spellCheck.addActionListener(new wordToolListener(spellCheckAction));
 		
 		

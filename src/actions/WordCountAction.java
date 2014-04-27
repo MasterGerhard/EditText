@@ -20,14 +20,13 @@ import pages.OpenPages;
 @SuppressWarnings("serial")
 public class WordCountAction extends AbstractAction {
 
-	private EditTextModel pagePanel;
-	public WordCountAction(EditTextModel pagePanel){
-		this.pagePanel = pagePanel;
+	private OpenPages pages;
+	public WordCountAction(OpenPages pages){
+		this.pages = pages;
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		OpenPages pages = pagePanel.getOpenPages();
 		int numPages = pages.size();
 		String pageNumMessage;
 		if(numPages > 1){
@@ -40,7 +39,7 @@ public class WordCountAction extends AbstractAction {
 		String allWords = "";
 		
 		for(int i = 0; i < pages.size(); i++){
-			JTextPane currentPage = pages.getPages().get(i) ;
+			JTextPane currentPage = pages.get(i) ;
 			String currentPageText = currentPage.getText();
 			allWords = allWords + " " + currentPageText;
 		}
