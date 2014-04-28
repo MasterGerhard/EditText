@@ -17,6 +17,7 @@ import pages.OpenPages;
 @SuppressWarnings("serial")
 public class BoldAction extends AbstractAction implements FontAction {
 	
+	public String label = "Bold";
 	private OpenPages pages;
 	
 	public BoldAction(OpenPages pages){
@@ -27,8 +28,7 @@ public class BoldAction extends AbstractAction implements FontAction {
 	public void actionPerformed(ActionEvent e) {
 		enabled = ((JToggleButton)e.getSource()).isSelected();
 		if(!pages.isEmpty()){
-			doFontAction();
-			
+			doFontAction();	
 		}
 	}
 	
@@ -39,12 +39,14 @@ public class BoldAction extends AbstractAction implements FontAction {
         doc.setCharacterAttributes(textPane.getSelectionStart(), textPane.getSelectionEnd() - textPane.getSelectionStart(), doc.getAttrStyle(), false);
 		textPane.requestFocus();
 		
-		// set all pages to bold/notbold
+		// set all pages to bold / not bold
 		for(int i = 0; i<pages.size();i++){
 			JTextPane currentPage = pages.get(i);
 			EditTextStyledDocument tempDoc = (EditTextStyledDocument) currentPage.getDocument();
 			StyleConstants.setBold(tempDoc.getAttrStyle(), enabled);	
 		}	
 	}
+
+
 	
 }

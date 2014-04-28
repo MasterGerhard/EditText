@@ -12,6 +12,8 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JToggleButton;
 
+import command.CommandStore;
+
 import main.EditTextPageModel;
 import main.EditTextToolBar;
 import actions.*;
@@ -23,7 +25,8 @@ import actions.*;
  */
 public class EditTextButtonFactory {
 	
-	public static void addFunctionalButtonsTo(EditTextToolBar tb, EditTextPageModel pagePanel){
+	public static void addFunctionalButtonsTo(EditTextToolBar tb, 
+			EditTextPageModel pagePanel, CommandStore cmds){
 		JButton newPage = new JButton();
 		JButton removePage = new JButton();
 		JButton wordCount = new JButton();
@@ -66,7 +69,8 @@ public class EditTextButtonFactory {
 	 * @param tb
 	 * @param pagePanel
 	 */
-	public static void addFontButtonsTo(EditTextToolBar tb, EditTextPageModel pagePanel){
+	public static void addFontButtonsTo(EditTextToolBar tb, 
+			EditTextPageModel pagePanel, CommandStore cmds){
 		JToggleButton bold = new JToggleButton();
 		JToggleButton italics = new JToggleButton();
 		JToggleButton underlined = new JToggleButton();

@@ -1,12 +1,20 @@
 package main;
+
+import actions.OpenAction;
+import actions.SaveAction;
+import command.CommandStore;
+
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
+import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 /**
  * Creates the JMenuBar and sets up ActionListeners
  * @author SteveG
@@ -15,16 +23,13 @@ import javax.swing.JOptionPane;
 
 @SuppressWarnings("serial")
 public class EditTextMenuBar extends JMenuBar {
-
-
-	private EditTextApplication application;
-	
-	public EditTextMenuBar(EditTextApplication theApplication){
+		
+	public EditTextMenuBar(EditTextFrame theFrame, CommandStore cmdStore){
 		super();
-		application = theApplication;
 		
 		//Add menus
         JMenu file = new JMenu("File");
+      //  file.setMnemonic('F');
         JMenu edit = new JMenu("Edit");
         JMenu help = new JMenu("Help"); 
 
@@ -34,14 +39,22 @@ public class EditTextMenuBar extends JMenuBar {
        
         // for file menu
         JMenuItem newWindow = new JMenuItem("New Window");
+        newWindow.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_N, ActionEvent.META_MASK));
        	JMenuItem open = new JMenuItem("Open...");
+       	open.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_O, ActionEvent.META_MASK));
         JMenuItem save = new JMenuItem("Save");
+        save.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_S, ActionEvent.META_MASK));
         JMenuItem quit = new JMenuItem("Quit");
+        quit.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_Q, ActionEvent.META_MASK));
         
-        newWindow.addActionListener(new NewWindowListener(application));
-        open.addActionListener(new OpenListener(application));
-        save.addActionListener(new SaveListener(application));
-        quit.addActionListener(new QuitListener(application));
+        newWindow.addActionListener(new NewWindowListener(theFrame));
+        open.addActionListener(new OpenListener(theFrame));
+        save.addActionListener(new SaveListener(theFrame));
+        quit.addActionListener(new QuitListener(theFrame));
         
         file.add(newWindow);
         file.add(open);
@@ -54,62 +67,62 @@ public class EditTextMenuBar extends JMenuBar {
         JMenuItem undo = new JMenuItem("Undo");
        	JMenuItem redo = new JMenuItem("Redo");
        	
-       	redo.addActionListener(new RedoListener(application));
-       	undo.addActionListener(new UndoListener(application));
+       	redo.addActionListener(new RedoListener(theFrame, cmdStore));
+       	undo.addActionListener(new UndoListener(theFrame, cmdStore));
        
        	edit.add(undo);
         edit.add(redo);
         
         // for help menu
         JMenuItem about = new JMenuItem("About");
-        about.addActionListener(new AboutListener(application,about.getParent()));
+        about.addActionListener(new AboutListener(theFrame));
         
         help.add(about);
 	}
 	
 	public class NewWindowListener implements ActionListener {
-		private EditTextApplication application;
-		public NewWindowListener(EditTextApplication theApplication){
-			application = theApplication;
+		private EditTextFrame theFrame;
+		public NewWindowListener(EditTextFrame theFrame){
+			this.theFrame = theFrame;
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			application.createNewFrame();
+			theFrame.getApplication().createNewFrame();
 
 		}
 
 	}	
 	public static class OpenListener implements ActionListener{
-		private EditTextApplication application;
+		private EditTextPageModel theModel;
 		
-		public OpenListener(EditTextApplication theApplication){
-			application = theApplication;
+		public OpenListener(EditTextFrame theFrame){
+			theModel = theFrame.getModel();
 		}
-		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+			OpenAction open = new OpenAction(theModel);
+
 		}
 		
 	}	
 	public class SaveListener implements ActionListener {
-		private EditTextApplication application;
-		public SaveListener(EditTextApplication theApplication){
-			application = theApplication;
+		private EditTextPageModel theModel;
+		
+		public SaveListener(EditTextFrame theFrame){
+			theModel = theFrame.getModel();
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
+			SaveAction save = new SaveAction(theModel);
 
 		}
 
 	}	
 	
 	public class QuitListener implements ActionListener {
-		private EditTextApplication application;
-		public QuitListener(EditTextApplication theApplication){
-			application = theApplication;
+		private EditTextFrame theFrame;
+		public QuitListener(EditTextFrame theFrame){
+			this.theFrame = theFrame;
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -120,36 +133,39 @@ public class EditTextMenuBar extends JMenuBar {
 	}
 	
 	public class UndoListener implements ActionListener {
-		private EditTextApplication application;
-		public UndoListener(EditTextApplication theApplication){
-			application = theApplication;
+		private EditTextFrame theFrame;
+		private CommandStore cmdStore;
+		public UndoListener(EditTextFrame theFrame, CommandStore cmds){
+			this.theFrame = theFrame;
+			cmdStore = cmds;
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
+			cmdStore.Undo();
+			System.out.println("Undo");
 
 		}
 
 	}
 	public class RedoListener implements ActionListener {
-		private EditTextApplication application;
-		public RedoListener(EditTextApplication theApplication){
-			application = theApplication;
+		private EditTextFrame theFrame;
+		private CommandStore cmdStore;
+		public RedoListener(EditTextFrame theFrame, CommandStore cmds){
+			this.theFrame = theFrame;
+			cmdStore = cmds;
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-
+			cmdStore.Redo();
+			System.out.println("Redo");
 		}
 
 	}
 	public class AboutListener implements ActionListener {
 		private EditTextApplication application;
-		private Container container;
 		private String popUpMessage;
-		public AboutListener(EditTextApplication theApplication, Container theContainer){
-			application = theApplication;
-			container = theContainer;
+		public AboutListener(EditTextFrame theFrame){
+			application = theFrame.getApplication();
 			popUpMessage = "EditText in java\n" 
 					+"Version " + application.versionNumber + "\n"
 					+"Developed by "+ application.creatorName +"\n"
@@ -160,7 +176,7 @@ public class EditTextMenuBar extends JMenuBar {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			JOptionPane.showMessageDialog(
-					container,popUpMessage,"EditText",JOptionPane.PLAIN_MESSAGE);
+					new JFrame(),popUpMessage,"EditText",JOptionPane.PLAIN_MESSAGE);
 
 		}
 

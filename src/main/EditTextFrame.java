@@ -12,6 +12,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.border.BevelBorder;
+
+import command.CommandStore;
 /**
  * Holds the JMenuBar and JPanel
  * also has a command store for undo/redo
@@ -40,10 +42,7 @@ public class EditTextFrame extends JFrame {
 		this.setLayout(new GridBagLayout());
 		EditTextToolBar tb = textModel.getToolBar();
 		
-		
-		
 		JScrollPane pageScroll = new JScrollPane(textModel.getPagePanel());
-		//pageScroll.setMinimumSize(new Dimension(100,100));
 	    pageScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 	    pageScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	    pageScroll.setBorder(new BevelBorder(BevelBorder.LOWERED));
@@ -52,20 +51,17 @@ public class EditTextFrame extends JFrame {
 		this.setJMenuBar(menuBar);
 		
 		GridBagConstraints c = new GridBagConstraints();
-		
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 0.0;
 		c.gridwidth = 3;
 		c.gridx = 0;
 		c.gridy = 0;
-		
 		this.add(tb,c);
 		c.fill = GridBagConstraints.BOTH;
 		c.weighty = 1;
 		c.gridwidth = 3;
 		c.gridx = 0;
 		c.gridy = 1;
-		
 		this.add(pageScroll,c);
 		
 		pack();
@@ -73,12 +69,21 @@ public class EditTextFrame extends JFrame {
 	}
 
 	private void createComponents() {
-		menuBar = new EditTextMenuBar(application);
-		textModel = new EditTextPageModel();
 		cmdStore = new CommandStore();
+		textModel = new EditTextPageModel(cmdStore);
+		menuBar = new EditTextMenuBar(this,cmdStore);
+		
+		
 		
 	}
 	
+	public EditTextApplication getApplication() {
+		return application;
+	}
+	
+	public EditTextPageModel getModel(){
+		return textModel;
+	}
 	
 	public static class EditTextWindowListener implements WindowListener{
 		private EditTextApplication application;

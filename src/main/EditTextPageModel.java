@@ -11,6 +11,8 @@ import javax.swing.JTextPane;
 import javax.swing.border.BevelBorder;
 import javax.swing.text.StyledDocument;
 
+import command.CommandStore;
+
 import pages.EditTextStyledDocument;
 import pages.OpenPages;
 
@@ -27,10 +29,10 @@ public class EditTextPageModel {
 	private OpenPages pages;
 	private JPanel pagePanel;
 	
-	public EditTextPageModel(){
+	public EditTextPageModel(CommandStore cmds){
 		super();
 		createPageComponents();
-		createToolBars();
+		createToolBars(cmds);
 	}
 	
 	/**
@@ -45,8 +47,8 @@ public class EditTextPageModel {
 		this.addPage();		
 	}
 	
-	public void createToolBars(){
-		toolBar = new EditTextToolBar(this);
+	public void createToolBars(CommandStore cmdStore){
+		toolBar = new EditTextToolBar(this, cmdStore);
 	}
 	
 	public void addPage(){
@@ -64,6 +66,26 @@ public class EditTextPageModel {
 		pagePanel.add(newPage,c);
 		pagePanel.setSize(new Dimension(450,500*pages.size()));
 		pagePanel.revalidate();
+		
+	}
+	
+	public void addPage(String pageText){
+		JTextPane newPage = pages.newPage();
+		StyledDocument doc = new EditTextStyledDocument();
+	    newPage.setDocument(doc);
+		newPage.setFont(new Font("Myraid", Font.PLAIN, 12));
+		newPage.setPreferredSize(new Dimension(400,400));
+		newPage.setBorder(new BevelBorder(BevelBorder.RAISED));
+		newPage.setText(pageText);
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.NONE;
+		c.gridx = 0;
+		c.gridy = pages.size();
+		c.insets = new Insets(10,0,10,0);
+		pagePanel.add(newPage,c);
+		pagePanel.setSize(new Dimension(450,500*pages.size()));
+		pagePanel.revalidate();
+		
 	}
 	
 	public void removePage(){
