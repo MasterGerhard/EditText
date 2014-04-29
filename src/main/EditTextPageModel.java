@@ -1,4 +1,5 @@
 package main;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -12,7 +13,6 @@ import javax.swing.border.BevelBorder;
 import javax.swing.text.StyledDocument;
 
 import command.CommandStore;
-
 import pages.EditTextStyledDocument;
 import pages.OpenPages;
 
@@ -42,6 +42,7 @@ public class EditTextPageModel {
 		
 		pages = new OpenPages();
 		pagePanel = new JPanel();
+		pagePanel.setBackground(Color.gray);
 		pagePanel.setLayout(new GridBagLayout());
 		
 		this.addPage();		

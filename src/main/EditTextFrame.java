@@ -58,6 +58,8 @@ public class EditTextFrame extends JFrame {
 		c.gridy = 0;
 		this.add(tb,c);
 		c.fill = GridBagConstraints.BOTH;
+		
+		c.weightx = 1;
 		c.weighty = 1;
 		c.gridwidth = 3;
 		c.gridx = 0;
