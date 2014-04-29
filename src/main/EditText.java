@@ -6,7 +6,7 @@ public class EditText {
 		EditTextApplication app = new EditTextApplication();
 		app.createdBy("Steve Gerhard and Brendan Gassler");
 		app.versionNumber("0.9.0");
-		app.lastUpdated("April 24, 2014");
+		app.lastUpdated("April 28, 2014");
 		app.launch();
 		
 	}
