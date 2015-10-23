@@ -1,6 +1,5 @@
 EditText in java
-By Steven Gerhard and Brendan Gassler
-CSE 2102 Group 18
+By Steven Gerhard
 
 Main-Class: main.EditText
 
