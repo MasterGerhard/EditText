@@ -31,21 +31,22 @@ public class EditTextPageModel {
 	
 	public EditTextPageModel(CommandStore cmds){
 		super();
-		createPageComponents();
+		createPageComponents(cmds);
 		createToolBars(cmds);
 	}
 	
 	/**
-	 * add one page and initialise components. 
+	 * add one page and initialise components.
 	 */
-	public void createPageComponents(){
+	public void createPageComponents(CommandStore cmds){
 		
 		pages = new OpenPages();
+		pages.setCommandStore(cmds);
 		pagePanel = new JPanel();
 		pagePanel.setBackground(Color.gray);
 		pagePanel.setLayout(new GridBagLayout());
 		
-		this.addPage();		
+		this.addPage();
 	}
 	
 	public void createToolBars(CommandStore cmdStore){
@@ -54,7 +55,7 @@ public class EditTextPageModel {
 	
 	public void addPage(){
 		JTextPane newPage = pages.newPage();
-		StyledDocument doc = new EditTextStyledDocument();
+		StyledDocument doc = pages.createUndoableDocument(newPage);
 	    newPage.setDocument(doc);
 		newPage.setFont(new Font("Myraid", Font.PLAIN, 12));
 		newPage.setPreferredSize(new Dimension(400,400));
@@ -72,7 +73,7 @@ public class EditTextPageModel {
 	
 	public void addPage(String pageText){
 		JTextPane newPage = pages.newPage();
-		StyledDocument doc = new EditTextStyledDocument();
+		StyledDocument doc = pages.createUndoableDocument(newPage);
 	    newPage.setDocument(doc);
 		newPage.setFont(new Font("Myraid", Font.PLAIN, 12));
 		newPage.setPreferredSize(new Dimension(400,400));

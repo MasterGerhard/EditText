@@ -5,6 +5,9 @@ import java.awt.event.FocusListener;
 import java.util.ArrayList;
 
 import javax.swing.JTextPane;
+import javax.swing.text.StyledDocument;
+
+import command.CommandStore;
 /**
  * Wrapper class for all JTextPanes within a given frame.
  * Attaches focusListeners to the pages to get current
@@ -16,10 +19,19 @@ public class OpenPages {
 
 	private ArrayList<JTextPane> pages;
 	private int focusedPage;
+	private CommandStore commandStore;
 	
 	public OpenPages(){
 		pages = new ArrayList<JTextPane>();
 		focusedPage = 0;
+	}
+	
+	public void setCommandStore(CommandStore cmdStore) {
+		this.commandStore = cmdStore;
+	}
+	
+	public StyledDocument createUndoableDocument(JTextPane pane) {
+		return new UndoableStyledDocument(commandStore, pane);
 	}
 	
 	/**

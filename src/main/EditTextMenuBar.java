@@ -65,12 +65,16 @@ public class EditTextMenuBar extends JMenuBar {
         
         // for edit menu
         JMenuItem undo = new JMenuItem("Undo");
-       	JMenuItem redo = new JMenuItem("Redo");
-       	
-       	redo.addActionListener(new RedoListener(theFrame, cmdStore));
-       	undo.addActionListener(new UndoListener(theFrame, cmdStore));
+        undo.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_Z, ActionEvent.META_MASK));
+        JMenuItem redo = new JMenuItem("Redo");
+        redo.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.VK_Z, ActionEvent.META_MASK | ActionEvent.SHIFT_MASK));
+        
+        redo.addActionListener(new RedoListener(theFrame, cmdStore));
+        undo.addActionListener(new UndoListener(theFrame, cmdStore));
        
-       	edit.add(undo);
+        edit.add(undo);
         edit.add(redo);
         
         // for help menu
