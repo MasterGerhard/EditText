@@ -14,6 +14,10 @@ public class CommandStore {
 	}
 	public void Execute(EditTextCmd cmd) {
 		cmd.Execute();
+		// Remove any commands after current index (for redo branch pruning)
+		while (listCommands.size() > indexCurCmd + 1) {
+			listCommands.remove(listCommands.size() - 1);
+		}
 		listCommands.add(cmd);
 		indexCurCmd = listCommands.size()-1;
 	}
