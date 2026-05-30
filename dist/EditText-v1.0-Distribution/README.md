@@ -100,24 +100,6 @@ EditText is a feature-rich text editor with the following capabilities:
 - Ensure you have sufficient memory available
 - Try with a fresh Java installation
 
----
-
-## Building from Source
-
-If you have the source code and want to rebuild the JAR:
-
-```bash
-./build-jar.sh
-```
-
-This will:
-1. Clean previous builds
-2. Compile all source files
-3. Copy resources
-4. Create the JAR file
-
----
-
 ## License & Credits
 
 **Created by:** Steven Gerhard  
